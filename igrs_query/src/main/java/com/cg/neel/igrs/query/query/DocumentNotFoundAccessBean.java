@@ -27,7 +27,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DocumentNotFoundAccessBean {
+public class DocumentNotFoundAccessBean extends DetailsForContactAccessBean{
 
 	@Id
 	@Column(name = "DocumentNotFoundId")

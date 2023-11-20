@@ -28,7 +28,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentRefundAccessBean {
+public class PaymentRefundAccessBean extends DetailsForContactAccessBean {
 
 	@Id
 	@Column(name = "PaymentRefundId")

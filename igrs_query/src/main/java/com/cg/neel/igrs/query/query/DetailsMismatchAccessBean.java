@@ -26,7 +26,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DetailsMismatchAccessBean {
+public class DetailsMismatchAccessBean extends DetailsForContactAccessBean {
 
 	@Id
 	@Column(name = "DetailsMismatchId")

@@ -42,33 +42,28 @@ public class QueryRaiseCmdImpl implements QueryRaiseCmd{
 	private final DataService dataService;
 	
 
-	@Override
-	public ResponseEntity<List<PaymentDropdownIdAndPaymentIdAndDateDto>> detailsPaymentDropdownIdAndPaymentIdAndDateDropdown() {
-		log.info("Request received for /queryId/payRefund endpoint.");
-		
-		//Calling User Micro Service
-		Long userId = userService.getUserId();
-		if(userId == 0L) {
-			return ResponseEntity.ok().body(Collections.emptyList());
-		}
-		log.info("Getting UserId.");
-		//Calling Payment micro service
-		List<PaymentDropdownIdAndPaymentIdAndDateDto> paymentData = paymentService.getDetailsPaymentRefund(userId);
-		log.info("Getting Details Payment Refund of UserId : {}" , userId);
-		return ResponseEntity.ok().body(paymentData);
-	}
-
-	@Override
-	public ResponseEntity<List<FileIdDto>> fileIdDropdown() {
-		//Calling User Micro Service
-		Long userId = userService.getUserId();
-		if(userId == 0L) {
-			return ResponseEntity.ok().body(Collections.emptyList());
-		}
-		//Calling Data micro service
-		List<FileIdDto> fileIdData = dataService.getFileIdByPrincipal(userId);
-		return ResponseEntity.ok().body(fileIdData);
-	}
+	/*
+	 * @Override public
+	 * ResponseEntity<List<PaymentDropdownIdAndPaymentIdAndDateDto>>
+	 * detailsPaymentDropdownIdAndPaymentIdAndDateDropdown() {
+	 * log.info("Request received for /queryId/payRefund endpoint.");
+	 * 
+	 * //Calling User Micro Service Long userId = userService.getUserId(); if(userId
+	 * == 0L) { return ResponseEntity.ok().body(Collections.emptyList()); }
+	 * log.info("Getting UserId."); //Calling Payment micro service
+	 * List<PaymentDropdownIdAndPaymentIdAndDateDto> paymentData =
+	 * paymentService.getDetailsPaymentRefund(userId);
+	 * 
+	 * log.info("Getting Details Payment Refund of UserId : {}" , userId); return
+	 * ResponseEntity.ok().body(paymentData); }
+	 * 
+	 * @Override public ResponseEntity<List<FileIdDto>> fileIdDropdown() { //Calling
+	 * User Micro Service Long userId = userService.getUserId(); if(userId == 0L) {
+	 * return ResponseEntity.ok().body(Collections.emptyList()); } //Calling Data
+	 * micro service List<FileIdDto> fileIdData =
+	 * dataService.getFileIdByPrincipal(userId); return
+	 * ResponseEntity.ok().body(fileIdData); }
+	 */
 
 	@Override
 	public ResponseEntity<String> saveDocumentNotFoundComplaint(Map<String, String> map) {
