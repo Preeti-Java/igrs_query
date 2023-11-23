@@ -3,21 +3,15 @@
  */
 package com.cg.neel.igrs.query.query.controller;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.neel.igrs.query.data.DataService;
-import com.cg.neel.igrs.query.payment.PaymentService;
-import com.cg.neel.igrs.query.query.dto.FileIdDto;
-import com.cg.neel.igrs.query.query.dto.PaymentDropdownIdAndPaymentIdAndDateDto;
-import com.cg.neel.igrs.query.query.projection.QueryDropdownIdAndNameProjection;
+import com.cg.neel.igrs.query.query.DetailsMismatchAccessBean;
+import com.cg.neel.igrs.query.query.DocumentNotFoundAccessBean;
+import com.cg.neel.igrs.query.query.PaymentRefundAccessBean;
 import com.cg.neel.igrs.query.query.service.QueryDataService;
-import com.cg.neel.igrs.query.users.UserService;
+import com.cg.neel.igrs.query.utils.UserUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,40 +29,45 @@ public class QueryRaiseCmdImpl implements QueryRaiseCmd{
 	
 	private final QueryDataService queryDataService;
 	
-	private final UserService userService;
+	private static final String USER_NOT_FOUND_EXCEPTION = "User not found";
+	private static final String SAVE_MSG = "Save";
 	
-	private final PaymentService paymentService;
-	
-	private final DataService dataService;
-	
-
-	/*
-	 * @Override public
-	 * ResponseEntity<List<PaymentDropdownIdAndPaymentIdAndDateDto>>
-	 * detailsPaymentDropdownIdAndPaymentIdAndDateDropdown() {
-	 * log.info("Request received for /queryId/payRefund endpoint.");
-	 * 
-	 * //Calling User Micro Service Long userId = userService.getUserId(); if(userId
-	 * == 0L) { return ResponseEntity.ok().body(Collections.emptyList()); }
-	 * log.info("Getting UserId."); //Calling Payment micro service
-	 * List<PaymentDropdownIdAndPaymentIdAndDateDto> paymentData =
-	 * paymentService.getDetailsPaymentRefund(userId);
-	 * 
-	 * log.info("Getting Details Payment Refund of UserId : {}" , userId); return
-	 * ResponseEntity.ok().body(paymentData); }
-	 * 
-	 * @Override public ResponseEntity<List<FileIdDto>> fileIdDropdown() { //Calling
-	 * User Micro Service Long userId = userService.getUserId(); if(userId == 0L) {
-	 * return ResponseEntity.ok().body(Collections.emptyList()); } //Calling Data
-	 * micro service List<FileIdDto> fileIdData =
-	 * dataService.getFileIdByPrincipal(userId); return
-	 * ResponseEntity.ok().body(fileIdData); }
-	 */
+	@Override
+	public ResponseEntity<String> saveDocumentNotFoundComplaint(DocumentNotFoundAccessBean documentNotFoundAccessBean) {
+		
+		//Get User Details
+		Long userId = UserUtils.getUserDetails();
+		if(userId == 0L)
+			return ResponseEntity.ok().body(USER_NOT_FOUND_EXCEPTION);
+		
+		documentNotFoundAccessBean.setUserId(userId);
+		queryDataService.saveDocumentNotFound(documentNotFoundAccessBean);
+		
+		return ResponseEntity.ok().body(SAVE_MSG);
+	}
 
 	@Override
-	public ResponseEntity<String> saveDocumentNotFoundComplaint(Map<String, String> map) {
+	public ResponseEntity<String> saveDetailsMismatchComplaint(DetailsMismatchAccessBean detailsMismatchAccessBean) {
+		//Get User Details
+		Long userId = UserUtils.getUserDetails();
+		if(userId == 0L)
+			return ResponseEntity.ok().body(USER_NOT_FOUND_EXCEPTION);
 		
-		return null;
+		detailsMismatchAccessBean.setUserId(userId);
+		queryDataService.saveDetailsMismatch(detailsMismatchAccessBean);
+		return ResponseEntity.ok().body(SAVE_MSG);
+	}
+
+	@Override
+	public ResponseEntity<String> savePaymentRefundComplaint(PaymentRefundAccessBean paymentRefundAccessBean) {
+		//Get User Details
+		Long userId = UserUtils.getUserDetails();
+		if(userId == 0L)
+			return ResponseEntity.ok().body(USER_NOT_FOUND_EXCEPTION);
+		
+		paymentRefundAccessBean.setUserId(userId);
+		queryDataService.savePaymentRefund(paymentRefundAccessBean);
+		return ResponseEntity.ok().body(SAVE_MSG);
 	}
 
 }

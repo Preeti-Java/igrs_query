@@ -34,7 +34,7 @@ public class DetailsMismatchAccessBean extends DetailsForContactAccessBean {
 	private Long detailsMismatchId;
 	
 	@Column(name = "DocumentId")
-	private String documentId;
+	private String documentId;     
 
 	@Column(name = "Description")
 	private String description;

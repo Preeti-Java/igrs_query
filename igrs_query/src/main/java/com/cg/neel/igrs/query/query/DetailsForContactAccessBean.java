@@ -16,13 +16,21 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import com.cg.neel.igrs.query.utils.Utils;
 
+import lombok.Getter;
+import lombok.Setter;
+
 
 /**
  * 
  */
 
 @MappedSuperclass
+@Setter
+@Getter
 public class DetailsForContactAccessBean {
+	
+	@Column(name = "UserId")
+	private Long userId;
 
 	@Column(name = "MobileNumber")
 	private String mobileNumber;

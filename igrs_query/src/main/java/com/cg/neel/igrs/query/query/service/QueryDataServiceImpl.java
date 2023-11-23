@@ -7,7 +7,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.cg.neel.igrs.query.query.DetailsMismatchAccessBean;
+import com.cg.neel.igrs.query.query.DocumentNotFoundAccessBean;
+import com.cg.neel.igrs.query.query.PaymentRefundAccessBean;
 import com.cg.neel.igrs.query.query.projection.QueryDropdownIdAndNameProjection;
+import com.cg.neel.igrs.query.query.repository.DetailsMismatchRepository;
+import com.cg.neel.igrs.query.query.repository.DocumentNotFoundRepository;
+import com.cg.neel.igrs.query.query.repository.PaymentRefundRepository;
 import com.cg.neel.igrs.query.query.repository.QueryTypeRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,11 +29,33 @@ import lombok.extern.slf4j.Slf4j;
 public class QueryDataServiceImpl implements QueryDataService{
 	
 	private final QueryTypeRepository queryTypeRepository;
+	
+	private final DocumentNotFoundRepository documentNotFoundRepository;
+	
+	private final DetailsMismatchRepository detailsMismatchRepository;
+	
+	private final PaymentRefundRepository paymentRefundRepository;
+	
 
 	@Override
 	public List<QueryDropdownIdAndNameProjection> getDetailsQueryTypeDropdown() {
 		log.debug("Performing an action in QueryDataService");
 		return queryTypeRepository.findAllDtoBy();
+	}
+
+	@Override
+	public void saveDocumentNotFound(DocumentNotFoundAccessBean documentNotFoundAccessBean) {
+		documentNotFoundRepository.save(documentNotFoundAccessBean);
+	}
+
+	@Override
+	public void saveDetailsMismatch(DetailsMismatchAccessBean detailsMismatchAccessBean) {
+		detailsMismatchRepository.save(detailsMismatchAccessBean);
+	}
+
+	@Override
+	public void savePaymentRefund(PaymentRefundAccessBean paymentRefundAccessBean) {
+		paymentRefundRepository.save(paymentRefundAccessBean);
 	}
 
 }

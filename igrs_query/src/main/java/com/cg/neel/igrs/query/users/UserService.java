@@ -36,7 +36,7 @@ public class UserService {
 	public Long getUserId() {
 		//Get Principal in SecurityContextHolder 
 		Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		log.debug("Getting object of User by Authenication");
+		log.debug("Getting object of User by Authentication");
 		//Using fault tolerance
 		return IGRS_SERVICE.getUserIdByPrincipal(object);
 	}
