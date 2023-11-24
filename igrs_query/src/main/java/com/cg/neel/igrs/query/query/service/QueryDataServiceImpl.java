@@ -58,4 +58,19 @@ public class QueryDataServiceImpl implements QueryDataService{
 		paymentRefundRepository.save(paymentRefundAccessBean);
 	}
 
+	@Override
+	public List<DocumentNotFoundAccessBean> getAllDocumentNotFoundByUserId(Long userId) {
+		return documentNotFoundRepository.findAllByUserId(userId);
+	}
+
+	@Override
+	public List<DetailsMismatchAccessBean> getAllDocumentMismatchByUserId(Long userId) {
+		return detailsMismatchRepository.findAllByUserId(userId);
+	}
+
+	@Override
+	public List<PaymentRefundAccessBean> getAllPaymentRefundByUserId(Long userId) {
+		return paymentRefundRepository.findAllByUserId(userId);
+	}
+
 }

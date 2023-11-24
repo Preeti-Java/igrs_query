@@ -3,7 +3,10 @@
  */
 package com.cg.neel.igrs.query.query.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -69,5 +72,34 @@ public class QueryRaiseCmdImpl implements QueryRaiseCmd{
 		queryDataService.savePaymentRefund(paymentRefundAccessBean);
 		return ResponseEntity.ok().body(SAVE_MSG);
 	}
+
+	@Override
+	public ResponseEntity<List<DocumentNotFoundAccessBean>> getDocumentNotFoundComplaint() {
+		//Get User Deatils
+		Long userId = UserUtils.getUserDetails();
+		if(userId == 0L)
+			throw new UsernameNotFoundException(USER_NOT_FOUND_EXCEPTION);
+		return ResponseEntity.ok().body(queryDataService.getAllDocumentNotFoundByUserId(userId));
+	}
+
+	@Override
+	public ResponseEntity<List<DetailsMismatchAccessBean>> getDetailsMismatchComplaint() {
+		//Get User Deatils
+		Long userId = UserUtils.getUserDetails();
+		if(userId == 0L)
+			throw new UsernameNotFoundException(USER_NOT_FOUND_EXCEPTION);
+		return ResponseEntity.ok().body(queryDataService.getAllDocumentMismatchByUserId(userId));
+	}
+
+	@Override
+	public ResponseEntity<List<PaymentRefundAccessBean>> getPaymentRefundComplaint() {
+		//Get User Deatils
+		Long userId = UserUtils.getUserDetails();
+		if(userId == 0L)
+			throw new UsernameNotFoundException(USER_NOT_FOUND_EXCEPTION);
+		return ResponseEntity.ok().body(queryDataService.getAllPaymentRefundByUserId(userId));
+	}
+
+
 
 }

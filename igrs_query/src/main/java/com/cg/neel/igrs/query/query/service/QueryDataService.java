@@ -36,4 +36,22 @@ public interface QueryDataService {
 	 */
 	void savePaymentRefund(PaymentRefundAccessBean paymentRefundAccessBean);
 
+	/**
+	 * @param userId
+	 * @return
+	 */
+	List<DocumentNotFoundAccessBean> getAllDocumentNotFoundByUserId(Long userId);
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	List<DetailsMismatchAccessBean> getAllDocumentMismatchByUserId(Long userId);
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	List<PaymentRefundAccessBean> getAllPaymentRefundByUserId(Long userId);
+
 }
