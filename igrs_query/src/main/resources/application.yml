@@ -4,7 +4,7 @@ server:
 
 spring:
    application:
-      name: IGRSQUERY-SERVICE
+      name: IGRSQUERY-SERVICE-PREETI
    main:
       allow-bean-definition-overriding: true
       allow-circular-references : true
@@ -32,8 +32,11 @@ spring:
     
    cloud:
       config:
-         import-check:
-            enabled: false
+            enabled: true
+   
+   config:
+    import:
+      configserver:http://192.168.1.60:8085
  
 
 eureka:

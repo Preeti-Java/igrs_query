@@ -3,7 +3,9 @@
  */
 package com.cg.neel.igrs.query.query.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,41 +38,54 @@ public class QueryRaiseCmdImpl implements QueryRaiseCmd{
 	private static final String SAVE_MSG = "Save";
 	
 	@Override
-	public ResponseEntity<String> saveDocumentNotFoundComplaint(DocumentNotFoundAccessBean documentNotFoundAccessBean) {
-		
+	public ResponseEntity<Map<String,String>> saveDocumentNotFoundComplaint(DocumentNotFoundAccessBean documentNotFoundAccessBean) {
+		//Response
+		Map<String,String> res = new HashMap<>();
 		//Get User Details
 		Long userId = UserUtils.getUserDetails();
-		if(userId == 0L)
-			return ResponseEntity.ok().body(USER_NOT_FOUND_EXCEPTION);
+		if(userId == 0L) {
+			res.put("msg",USER_NOT_FOUND_EXCEPTION);
+			return ResponseEntity.ok().body(res);
+		}
 		
 		documentNotFoundAccessBean.setUserId(userId);
 		queryDataService.saveDocumentNotFound(documentNotFoundAccessBean);
 		
-		return ResponseEntity.ok().body(SAVE_MSG);
+		res.put("msg", SAVE_MSG);
+		return ResponseEntity.ok().body(res);
 	}
 
 	@Override
-	public ResponseEntity<String> saveDetailsMismatchComplaint(DetailsMismatchAccessBean detailsMismatchAccessBean) {
+	public ResponseEntity<Map<String,String>> saveDetailsMismatchComplaint(DetailsMismatchAccessBean detailsMismatchAccessBean) {
+		//Response
+		Map<String,String> res = new HashMap<>();
 		//Get User Details
 		Long userId = UserUtils.getUserDetails();
-		if(userId == 0L)
-			return ResponseEntity.ok().body(USER_NOT_FOUND_EXCEPTION);
+		if(userId == 0L) {
+			res.put("msg",USER_NOT_FOUND_EXCEPTION);
+			return ResponseEntity.ok().body(res);
+		}
 		
 		detailsMismatchAccessBean.setUserId(userId);
 		queryDataService.saveDetailsMismatch(detailsMismatchAccessBean);
-		return ResponseEntity.ok().body(SAVE_MSG);
+		res.put("msg", SAVE_MSG);
+		return ResponseEntity.ok().body(res);
 	}
 
 	@Override
-	public ResponseEntity<String> savePaymentRefundComplaint(PaymentRefundAccessBean paymentRefundAccessBean) {
+	public ResponseEntity<Map<String,String>> savePaymentRefundComplaint(PaymentRefundAccessBean paymentRefundAccessBean) {
+		//Response
+		Map<String,String> res = new HashMap<>();
 		//Get User Details
 		Long userId = UserUtils.getUserDetails();
-		if(userId == 0L)
-			return ResponseEntity.ok().body(USER_NOT_FOUND_EXCEPTION);
-		
+		if(userId == 0L) {
+			res.put("msg",USER_NOT_FOUND_EXCEPTION);
+			return ResponseEntity.ok().body(res);
+		}
 		paymentRefundAccessBean.setUserId(userId);
 		queryDataService.savePaymentRefund(paymentRefundAccessBean);
-		return ResponseEntity.ok().body(SAVE_MSG);
+		res.put("msg", SAVE_MSG);
+		return ResponseEntity.ok().body(res);
 	}
 
 	@Override

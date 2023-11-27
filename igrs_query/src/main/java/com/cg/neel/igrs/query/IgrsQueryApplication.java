@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableEurekaClient
-@EnableFeignClients 
+@EnableFeignClients   
 @EnableJpaRepositories("com.cg.neel.igrs.*")
 @ComponentScans(value = {
 		@ComponentScan("com.cg.neel.igrs.*")

@@ -4,6 +4,7 @@
 package com.cg.neel.igrs.query.query.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +26,13 @@ import com.cg.neel.igrs.query.query.PaymentRefundAccessBean;
 public interface QueryRaiseCmd {
 	
 	@PostMapping("/docNotFound")
-	ResponseEntity<String> saveDocumentNotFoundComplaint(@RequestBody final DocumentNotFoundAccessBean documentNotFoundAccessBean);
+	ResponseEntity<Map<String,String>> saveDocumentNotFoundComplaint(@RequestBody final DocumentNotFoundAccessBean documentNotFoundAccessBean);
 	
 	@PostMapping("/deedMismatch")
-	ResponseEntity<String> saveDetailsMismatchComplaint(@RequestBody final DetailsMismatchAccessBean detailsMismatchAccessBean);
+	ResponseEntity<Map<String,String>> saveDetailsMismatchComplaint(@RequestBody final DetailsMismatchAccessBean detailsMismatchAccessBean);
 	
 	@PostMapping("/payIssue")
-	ResponseEntity<String> savePaymentRefundComplaint(@RequestBody final PaymentRefundAccessBean paymentRefundAccessBean);
+	ResponseEntity<Map<String,String>> savePaymentRefundComplaint(@RequestBody final PaymentRefundAccessBean paymentRefundAccessBean);
 	
 	@GetMapping("/docNotFound")
 	ResponseEntity<List<DocumentNotFoundAccessBean>> getDocumentNotFoundComplaint();

@@ -40,14 +40,19 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 				try {
 					// for retrieving any information from token we will need the secret key
 					Claims claims = getAllClaimsFromToken(jwt);
-
+					
 					String username = String.valueOf(claims.get("username"));
 					String authorities = String.valueOf(claims.get("authorities"));
-					Authentication authentication = new UsernamePasswordAuthenticationToken(username, null,
+					String userId = String.valueOf(claims.get("userId"));
+					
+					IgrsUser igrsUser=new IgrsUser();
+					igrsUser.setUserId(userId);
+					igrsUser.setUsername(username);
+					
+					
+					Authentication authentication = new UsernamePasswordAuthenticationToken(igrsUser,null,
 							AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
 					SecurityContextHolder.getContext().setAuthentication(authentication);
-
-					
 					
 				} catch (Exception e) {
 					throw new BadCredentialsException("Invalid/Expired Token Received");

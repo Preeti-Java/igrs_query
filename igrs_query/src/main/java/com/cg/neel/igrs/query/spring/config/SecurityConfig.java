@@ -36,50 +36,49 @@ public class SecurityConfig {
 	
 	private static final String ACTUATOR_BASE = "/actuator/**";
 
-	/**
-	 * @return
-	 */
-	@Bean
-	public PasswordEncoder enoder() {
+    /**
+     * @return
+     */
+    @Bean
+    PasswordEncoder enoder() {
 		//Update in future
 		return new BCryptPasswordEncoder(11);
 	}
-	
-	
-	 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.securityContext((context) -> context
+
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.securityContext((context) -> context
                 .requireExplicitSave(false))
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Arrays.asList("http://localhost:4200","http://localhost"));
-                config.setAllowedMethods(Collections.singletonList("*"));
-                config.setAllowCredentials(true);
-                config.setAllowedHeaders(Collections.singletonList("*"));
-                config.setMaxAge(3600L);
-                return config;
-            }
-        }))
-		 	.csrf().disable() 
-		 	.addFilterBefore(new JwtTokenValidatorFilter(), UsernamePasswordAuthenticationFilter.class)
-		 	.authorizeRequests()
-		 	.antMatchers(ACTUATOR_BASE)
-		 	.permitAll()
-		 	.anyRequest()
-		 	.authenticated()
-		 	.and()
-          .exceptionHandling().authenticationEntryPoint((request, response, authException) ->
-                      response.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost"));
+                        config.setAllowedMethods(Collections.singletonList("*"));
+                        config.setAllowCredentials(true);
+                        config.setAllowedHeaders(Collections.singletonList("*"));
+                        config.setMaxAge(3600L);
+                        return config;
+                    }
+                }))
+                .csrf(csrf -> csrf.disable())
+                .addFilterBefore(new JwtTokenValidatorFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests()
+                .antMatchers(ACTUATOR_BASE)
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling(handling -> handling.authenticationEntryPoint((request, response, authException) ->
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED)));
 
       return http.build();
 	}
-	
-	@Bean
-	public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
+
+    @Bean
+    AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
 		  return http.getSharedObject(AuthenticationManagerBuilder.class)
 		            .build();
 	}

@@ -42,7 +42,7 @@ public class DetailsForContactAccessBean {
 	private String contactPersonName;
 	
 	@Column(name = "FatherName")
-	private String fatherame;
+	private String fatherName;
 	
 	@CreatedDate
 	@Column(name = "CREATED_AT", nullable = false, updatable = false)
